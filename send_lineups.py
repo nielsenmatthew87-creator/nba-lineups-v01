@@ -2,6 +2,7 @@ import os
 import datetime as dt
 import requests
 
+# Read secrets from environment variables
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 CHAT_ID = os.environ["CHAT_ID"]  # keep as string
 
@@ -25,12 +26,11 @@ def send_telegram_message(text: str) -> None:
     }
     resp = requests.post(url, json=payload, timeout=15)
 
-    # Debug output
+    # Optional debug – you can remove these once it's working
     print("Status code:", resp.status_code)
     print("Response text:", resp.text)
 
     resp.raise_for_status()
-
 
 def main():
     msg = build_message()
