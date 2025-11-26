@@ -1,0 +1,29 @@
+name: Send NBA lineups to Telegram
+
+on:
+  schedule:
+    # 22:00 UTC = 5:00 PM ET (standard time)
+    - cron: "0 22 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  send-lineups:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run script
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: python send_lineups.py
