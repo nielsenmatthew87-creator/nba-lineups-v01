@@ -24,7 +24,13 @@ def send_telegram_message(text: str) -> None:
         "disable_web_page_preview": False,
     }
     resp = requests.post(url, json=payload, timeout=15)
+
+    # Debug output
+    print("Status code:", resp.status_code)
+    print("Response text:", resp.text)
+
     resp.raise_for_status()
+
 
 def main():
     msg = build_message()
